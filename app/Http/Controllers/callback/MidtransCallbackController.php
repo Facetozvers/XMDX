@@ -14,7 +14,7 @@ class MidtransCallbackController extends Controller
         
 
         //proses pembayaran berhasil
-        if($charge['transaction_status'] == 'settlement'){ 
+        if($charge['transaction_status'] == 'settlement' || $charge['transaction_status'] == 'capture'){ 
 
             $payment = Payment::where('transaction_id',$charge['transaction_id'])->first();
             $payment->status = $charge['transaction_status'];  

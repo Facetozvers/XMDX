@@ -31,6 +31,7 @@
             </div>
             <button class="btn btn-primary mx-auto my-1 py-3" onclick="getToken()">Submit</button>
             <form action="/midtrans/chargeCard" method="post" id="tokenForm">
+              @csrf
               <input type="hidden" name="card_token" id="card_token">
             </form>
 
@@ -43,7 +44,12 @@
 
             <label for="" class="mt-3">eWallet</label>
             <a href="/xendit/chargeDana" class="btn btn-success mx-auto my-1 py-3">DANA</a>
-            <a href="/xendit/chargeOVO" class="btn btn-success mx-auto my-1 py-3">OVO</a>
+            <a class="btn btn-success mx-auto my-1 py-3">OVO</a>
+            <form action="/xendit/chargeOVO" method="post" id="tokenForm">
+              @csrf
+              <input type="number" name="mobile_number" placeholder="Nomor Handphone" required>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
             <a href="/xendit/chargeShopeePay" class="btn btn-success mx-auto my-1 py-3">SHOPEEPAY</a>
             <a href="/midtrans/chargeGopay" class="btn btn-success mx-auto my-1 py-3">GOPAY</a>
             <a href="/xendit/chargeLinkAja" class="btn btn-success mx-auto my-1 py-3">LINKAJA</a>
@@ -81,7 +87,7 @@
             
             var token_id = response.token_id;
             document.getElementById('card_token').value = token_id;
-            setTimeout(document.getElementById('tokenForm').submit(), 1500);
+            setTimeout(document.getElementById('tokenForm').submit(), 2500);
             
           },
           onFailure: function(response){

@@ -23,6 +23,7 @@ Route::get('/xendit/getPaymentChannels', 'XenditController@getPaymentChannels');
 
 //xendit Charge
 Route::get('/xendit/chargeDana', 'XenditController@chargeDana');
+Route::post('/xendit/chargeOVO', 'XenditController@chargeOVO');
 Route::get('/xendit/chargeLinkAja', 'XenditController@chargeLinkAja');
 Route::get('/xendit/chargeShopeePay', 'XenditController@chargeShopeePay');
 Route::get('/xendit/chargeAlfamart', 'XenditController@chargeAlfamart');
@@ -35,11 +36,12 @@ Route::get('/midtrans/chargeBCAVA', 'MidtransController@chargeBCAVA');
 Route::get('/midtrans/chargeBRIVA', 'MidtransController@chargeBRIVA');
 Route::get('/midtrans/chargeMandiriVA', 'MidtransController@chargeMandiriVA');
 Route::get('/midtrans/chargePermataVA', 'MidtransController@chargePermataVA');
-Route::get('/midtrans/chargeCard', 'MidtransController@chargeCard');
+Route::post('/midtrans/chargeCard', 'MidtransController@chargeCard');
 
 //checkoutPage
 Route::get('/shopeePay/checkout', 'XenditController@shopeePayCheckout');
 Route::get('/retail/checkout', 'XenditController@retailCheckout');
+Route::get('/ovo/checkout', 'XenditController@ovoCheckout');
 Route::get('/payment/checkout/{id}', 'MidtransController@vaCheckout');
 
 //Xendit Callback
@@ -55,3 +57,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/simulasi/retail/indomaret/{id}','XenditController@payIndomaret');
 Route::get('/simulasi/retail/alfamart/{id}','XenditController@payAlfamart');
+
+Route::get('/test', function(){
+    return view('payment.3ds');
+});

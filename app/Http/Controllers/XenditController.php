@@ -141,7 +141,7 @@ class XenditController extends Controller
 
     public function chargeOVO(Request $request){
         Xendit::setApiKey($this->api_key);
-
+        
         $payment = new Payment;
         $payment->user_id = Auth::id();
         $payment->amount = 699000;
@@ -155,7 +155,7 @@ class XenditController extends Controller
             'checkout_method' => 'ONE_TIME_PAYMENT',
             'channel_code' => 'ID_OVO',
             'channel_properties' => [
-                'phone_number' => $request->phone_number,
+                'mobile_number' => '+62'.$request->mobile_number,
                 'success_redirect_url' => 'http://localhost:8000/home',
             ],
             'metadata' => [
@@ -169,9 +169,14 @@ class XenditController extends Controller
         $payment->status = $chargeData['status'];
         $payment->save();
         
-        return redirect($chargeData['actions']['desktop_web_checkout_url']);
+        return redirect('/ovo/checkout?code='.$payment->transaction_id);
 
         
+    }
+
+    public function ovoCheckout(Request $request){
+        $code = $request->code;
+        return view('payment.ovo', ['code' => $code]);
     }
 
     public function chargeAlfamart(){
