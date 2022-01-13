@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use Illuminate\Support\Str;
 use Xendit\Xendit;
 use App\Payment;
 use App\User;
@@ -36,12 +37,15 @@ class XenditController extends Controller
 
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Xendit';
+        $payment->payment_type = 'DANA eWallet';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
 
         $ChargeParams = [
-            'reference_id' => 'test'. $payment->id,
+            'reference_id' => $payment->order_id,
             'currency' => 'IDR',
             'amount' => $payment->amount,
             'checkout_method' => 'ONE_TIME_PAYMENT',
@@ -70,12 +74,15 @@ class XenditController extends Controller
 
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Xendit';
+        $payment->payment_type = 'LinkAja eWallet';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
 
         $ChargeParams = [
-            'reference_id' => 'test'. $payment->id,
+            'reference_id' => $payment->order_id,
             'currency' => 'IDR',
             'amount' => $payment->amount,
             'checkout_method' => 'ONE_TIME_PAYMENT',
@@ -104,12 +111,15 @@ class XenditController extends Controller
 
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Xendit';
+        $payment->payment_type = 'ShopeePay eWallet';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
 
         $ChargeParams = [
-            'reference_id' => 'test'. $payment->id,
+            'reference_id' => $payment->order_id,
             'currency' => 'IDR',
             'amount' => $payment->amount,
             'checkout_method' => 'ONE_TIME_PAYMENT',
@@ -144,12 +154,15 @@ class XenditController extends Controller
         
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Xendit';
+        $payment->payment_type = 'OVO eWallet';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
 
         $ChargeParams = [
-            'reference_id' => 'test'. $payment->id,
+            'reference_id' => $payment->order_id,
             'currency' => 'IDR',
             'amount' => $payment->amount,
             'checkout_method' => 'ONE_TIME_PAYMENT',
@@ -184,12 +197,15 @@ class XenditController extends Controller
 
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Xendit';
+        $payment->payment_type = 'Alfamart';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
 
         $params = [
-            'external_id' => 'test'. $payment->id,
+            'external_id' => $payment->order_id,
             'retail_outlet_name' => 'ALFAMART',
             'name' => Auth::user()->name,
             'expected_amount' => $payment->amount,
@@ -198,9 +214,10 @@ class XenditController extends Controller
         $chargeData = \Xendit\Retail::create($params);
         $payment->transaction_id = $chargeData['payment_code'];
         $payment->status = $chargeData['status'];
+        $payment->retail_payment_id = $chargeData['id'];
         $payment->save();
         
-        return redirect('/retail/checkout?code='.$chargeData['id'].'&outlet=alfamart');
+        return redirect('/retail/checkout?code='.$payment->retail_payment_id.'&outlet=alfamart');
     }
 
     public function retailCheckout(Request $request){
@@ -223,12 +240,15 @@ class XenditController extends Controller
 
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Xendit';
+        $payment->payment_type = 'Indomaret';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
 
         $params = [
-            'external_id' => 'test'. $payment->id,
+            'external_id' => $order_id,
             'retail_outlet_name' => 'INDOMARET',
             'name' => Auth::user()->name,
             'expected_amount' => $payment->amount,
@@ -237,9 +257,10 @@ class XenditController extends Controller
         $chargeData = \Xendit\Retail::create($params);
         $payment->transaction_id = $chargeData['payment_code'];
         $payment->status = $chargeData['status'];
+        $payment->retail_payment_id = $chargeData['id'];
         $payment->save();
         
-        return redirect('/retail/checkout?code='.$chargeData['id'].'&outlet=indomaret');
+        return redirect('/retail/checkout?code='.$payment->retail_payment_id.'&outlet=indomaret');
     }
     
     public function payIndomaret($id){

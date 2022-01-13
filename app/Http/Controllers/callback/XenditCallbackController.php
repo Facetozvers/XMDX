@@ -24,7 +24,7 @@ class XenditCallbackController extends Controller
         //proses pembayaran berhasil
         if($charge['data']['status'] == 'SUCCEEDED'){ 
 
-            $payment = Payment::where('transaction_id',$charge['data']['id'])->first();
+            $payment = Payment::where('order_id',$charge['data']['reference_id'])->first();
             $payment->status = $charge['data']['status'];   //SUCCEEDED
             $payment->save();
 
@@ -39,7 +39,7 @@ class XenditCallbackController extends Controller
         //status pembayaran berubah
         else{       
 
-            $payment = Payment::where('transaction_id',$charge['data']['id'])->first();
+            $payment = Payment::where('order_id',$charge['data']['reference_id'])->first();
             $payment->status = $charge['data']['status'];  
             $payment->save();
 
@@ -50,7 +50,7 @@ class XenditCallbackController extends Controller
     public function retailPaymentStatus(){
         $charge = json_decode(request()->getContent(), true);
 
-        $payment = Payment::where('transaction_id', $charge['payment_code'])->first();
+        $payment = Payment::where('order_id', $charge['payment_code'])->first();
         
         $payment->status = $charge['status'];   
         $payment->save();
