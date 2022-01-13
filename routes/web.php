@@ -44,6 +44,7 @@ Route::get('/retail/checkout', 'XenditController@retailCheckout');
 Route::get('/ovo/checkout', 'XenditController@ovoCheckout');
 Route::get('/payment/checkout/{id}', 'MidtransController@vaCheckout');
 
+
 //Xendit Callback
 Route::post('/callback/xendit/ewallet/status', 'callback\XenditCallbackController@eWalletPaymentStatus');
 Route::post('/callback/xendit/retail/status', 'callback\XenditCallbackController@retailPaymentStatus');

@@ -50,7 +50,7 @@ class XenditCallbackController extends Controller
     public function retailPaymentStatus(){
         $charge = json_decode(request()->getContent(), true);
 
-        $payment = Payment::where('order_id', $charge['payment_code'])->first();
+        $payment = Payment::where('transaction_id', $charge['payment_code'])->first();
         
         $payment->status = $charge['status'];   
         $payment->save();

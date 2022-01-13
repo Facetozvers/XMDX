@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Payment;
 use App\User;
 
@@ -17,13 +18,16 @@ class MidtransController extends Controller
 
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Midtrans';
+        $payment->payment_type = 'Card Payment';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
 
         $params = array(
             'transaction_details' => array(
-                'order_id' => 'test'.$payment->id,
+                'order_id' => $payment->order_id,
                 'gross_amount' => $payment->amount,
             ),
             'payment_type' => 'credit_card',
@@ -55,13 +59,16 @@ class MidtransController extends Controller
 
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Midtrans';
+        $payment->payment_type = 'GOPAY eWallet';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
 
         $params = array(
             'transaction_details' => array(
-                'order_id' => 'test'.$payment->id,
+                'order_id' => $payment->order_id,
                 'gross_amount' => $payment->amount,
             ),
             'payment_type' => 'gopay',
@@ -86,6 +93,9 @@ class MidtransController extends Controller
 
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Midtrans';
+        $payment->payment_type = 'BNI Virtual Account';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
@@ -93,7 +103,7 @@ class MidtransController extends Controller
         $params = array(
             "payment_type" => "bank_transfer",
             "transaction_details" => array(
-                'order_id' => 'test'.$payment->id,
+                'order_id' => $payment->order_id,
                 'gross_amount' => $payment->amount,
             ),
             "bank_transfer" => array(
@@ -116,6 +126,9 @@ class MidtransController extends Controller
 
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Midtrans';
+        $payment->payment_type = 'BCA Virtual Account';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
@@ -123,7 +136,7 @@ class MidtransController extends Controller
         $params = array(
             "payment_type" => "bank_transfer",
             "transaction_details" => array(
-                'order_id' => 'test'.$payment->id,
+                'order_id' => $payment->order_id,
                 'gross_amount' => $payment->amount,
             ),
             "bank_transfer" => array(
@@ -146,6 +159,9 @@ class MidtransController extends Controller
 
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Midtrans';
+        $payment->payment_type = 'BRI Virtual Account';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
@@ -153,7 +169,7 @@ class MidtransController extends Controller
         $params = array(
             "payment_type" => "bank_transfer",
             "transaction_details" => array(
-                'order_id' => 'test'.$payment->id,
+                'order_id' => $payment->order_id,
                 'gross_amount' => $payment->amount,
             ),
             "bank_transfer" => array(
@@ -176,6 +192,9 @@ class MidtransController extends Controller
 
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Midtrans';
+        $payment->payment_type = 'Mandiri Virtual Account';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
@@ -183,7 +202,7 @@ class MidtransController extends Controller
         $params = array(
             "payment_type" => "echannel",
             "transaction_details" => array(
-                'order_id' => 'test'.$payment->id,
+                'order_id' => $payment->order_id,
                 'gross_amount' => $payment->amount,
             ),
             "echannel" => array(
@@ -207,6 +226,9 @@ class MidtransController extends Controller
 
         $payment = new Payment;
         $payment->user_id = Auth::id();
+        $payment->order_id = 'DX-'.Str::random(5);
+        $payment->gateway = 'Midtrans';
+        $payment->payment_type = 'Permata Virtual Account';
         $payment->amount = 699000;
         $payment->status = 'PENDING';
         $payment->save();
@@ -214,7 +236,7 @@ class MidtransController extends Controller
         $params = array(
             "payment_type" => "permata",
             "transaction_details" => array(
-                'order_id' => 'test'.$payment->id,
+                'order_id' => $payment->order_id,
                 'gross_amount' => $payment->amount,
             ),
         );
@@ -235,6 +257,26 @@ class MidtransController extends Controller
         $chargeData = \Midtrans\Transaction::status($id);
         
         return view('payment.va', ['chargeData' => $chargeData]);
+    }
+
+    public function cardPaymentStatus(Request $request){
+        $response = json_decode($request['response'], true);
+        
+        if($response['transaction_status'] == 'capture'){
+            if($response['fraud_status'] == 'challenge'){
+                echo 'pembayaran anda sedang dalam pertimbangan, mohon pantau dashboard untuk mendapatkan informasi lebih lanjut..';
+                
+                return response()->header("Refresh", "5;url=/home"); 
+            }
+            else{
+                echo 'Pembayaran berhasil, mengalihkan...';
+                echo "<script>setTimeout(function(){ window.location.href = '/home'; }, 5000);</script>";
+            }
+        }
+        if($response['transaction_status'] == 'deny'){
+            echo 'Transaksi gagal';
+            return header("Refresh", "5;url=/home"); 
+        }
     }
 
 }

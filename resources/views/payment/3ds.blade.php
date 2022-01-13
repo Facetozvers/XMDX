@@ -40,7 +40,7 @@
         var options = {
             performAuthentication: function(redirect_url){
                 // Implement how you will open iframe to display 3ds authentication redirect_url to customer
-                MidtransNew3ds.redirect( redirect_url, { callbackUrl : 'http://localhost:8000' });
+                MidtransNew3ds.redirect( redirect_url, { callbackUrl : 'http://localhost:8000/api/card/checkout/status' });
             },
             onSuccess: function(response){
                 // 3ds authentication success, implement payment success scenario

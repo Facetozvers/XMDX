@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Xendit Callback
+Route::post('/callback/xendit/ewallet/status', 'callback\XenditCallbackController@eWalletPaymentStatus');
+Route::post('/callback/xendit/retail/status', 'callback\XenditCallbackController@retailPaymentStatus');
+
+//Midtrans Callback
+Route::post('/callback/midtrans/payment/status', 'callback\MidtransCallbackController@paymentStatus');
+Route::post('/card/checkout/status', 'MidtransController@cardPaymentStatus');

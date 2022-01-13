@@ -248,7 +248,7 @@ class XenditController extends Controller
         $payment->save();
 
         $params = [
-            'external_id' => $order_id,
+            'external_id' => $payment->order_id,
             'retail_outlet_name' => 'INDOMARET',
             'name' => Auth::user()->name,
             'expected_amount' => $payment->amount,
