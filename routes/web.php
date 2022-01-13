@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/premium', function () {
-    return view('payment');
-});
+Route::get('/premium', 'HomeController@premium');
 Route::get('/', function(){
     return view('welcome');
 });
@@ -45,20 +43,8 @@ Route::get('/ovo/checkout', 'XenditController@ovoCheckout');
 Route::get('/payment/checkout/{id}', 'MidtransController@vaCheckout');
 
 
-//Xendit Callback
-Route::post('/callback/xendit/ewallet/status', 'callback\XenditCallbackController@eWalletPaymentStatus');
-Route::post('/callback/xendit/retail/status', 'callback\XenditCallbackController@retailPaymentStatus');
-
-//Midtrans Callback
-Route::post('/callback/midtrans/payment/status', 'callback\MidtransCallbackController@paymentStatus');
-
-
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/simulasi/retail/indomaret/{id}','XenditController@payIndomaret');
 Route::get('/simulasi/retail/alfamart/{id}','XenditController@payAlfamart');
-
-Route::get('/test', function(){
-    return view('payment.3ds');
-});

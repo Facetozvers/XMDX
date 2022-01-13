@@ -13,6 +13,17 @@ class MidtransController extends Controller
     private $api_key= 'SB-Mid-server-Z0WqZ60NiCXVrKeoKr0D3miW';
 
     public function chargeCard(Request $request){
+        //cek apakah ada pembayaran aktif dan level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+
         \Midtrans\Config::$serverKey = $this->api_key;
         \Midtrans\Config::$isProduction = false;
 
@@ -54,6 +65,17 @@ class MidtransController extends Controller
     }
 
     public function chargeGopay(){
+        //cek apakah ada pembayaran aktif dan level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+
         \Midtrans\Config::$serverKey = $this->api_key;
         \Midtrans\Config::$isProduction = false;
 
@@ -88,6 +110,17 @@ class MidtransController extends Controller
     }
 
     public function chargeBNIVA(){
+        //cek apakah ada pembayaran aktif dan level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+
         \Midtrans\Config::$serverKey = $this->api_key;
         \Midtrans\Config::$isProduction = false;
 
@@ -121,6 +154,17 @@ class MidtransController extends Controller
     }
 
     public function chargeBCAVA(){
+        //cek apakah ada pembayaran aktif dan level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+
         \Midtrans\Config::$serverKey = $this->api_key;
         \Midtrans\Config::$isProduction = false;
 
@@ -154,6 +198,17 @@ class MidtransController extends Controller
     }
 
     public function chargeBRIVA(){
+        //cek apakah ada pembayaran aktif dan level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+
         \Midtrans\Config::$serverKey = $this->api_key;
         \Midtrans\Config::$isProduction = false;
 
@@ -187,6 +242,17 @@ class MidtransController extends Controller
     }
 
     public function chargeMandiriVA(){
+        //cek apakah ada pembayaran aktif dan level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+
         \Midtrans\Config::$serverKey = $this->api_key;
         \Midtrans\Config::$isProduction = false;
 
@@ -221,6 +287,17 @@ class MidtransController extends Controller
     }
 
     public function chargePermataVA(){
+        //cek apakah ada pembayaran aktif dan level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+        
         \Midtrans\Config::$serverKey = $this->api_key;
         \Midtrans\Config::$isProduction = false;
 
@@ -266,7 +343,7 @@ class MidtransController extends Controller
             if($response['fraud_status'] == 'challenge'){
                 echo 'pembayaran anda sedang dalam pertimbangan, mohon pantau dashboard untuk mendapatkan informasi lebih lanjut..';
                 
-                return response()->header("Refresh", "5;url=/home"); 
+                echo "<script>setTimeout(function(){ window.location.href = '/home'; }, 5000);</script>"; 
             }
             else{
                 echo 'Pembayaran berhasil, mengalihkan...';

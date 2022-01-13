@@ -33,6 +33,17 @@ class XenditController extends Controller
     }
     
     public function chargeDana(){
+        //cek apakah ada pembayaran aktif dan user level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+
         Xendit::setApiKey($this->api_key);
 
         $payment = new Payment;
@@ -70,6 +81,17 @@ class XenditController extends Controller
     }
 
     public function chargeLinkAja(){
+        //cek apakah ada pembayaran aktif dan user level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+
         Xendit::setApiKey($this->api_key);
 
         $payment = new Payment;
@@ -107,6 +129,17 @@ class XenditController extends Controller
     }
 
     public function chargeShopeePay(){
+        //cek apakah ada pembayaran aktif dan user level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+
         Xendit::setApiKey($this->api_key);
 
         $payment = new Payment;
@@ -150,6 +183,17 @@ class XenditController extends Controller
     }
 
     public function chargeOVO(Request $request){
+        //cek apakah ada pembayaran aktif dan user level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+
         Xendit::setApiKey($this->api_key);
         
         $payment = new Payment;
@@ -193,6 +237,17 @@ class XenditController extends Controller
     }
 
     public function chargeAlfamart(){
+        //cek apakah ada pembayaran aktif dan user level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+
         Xendit::setApiKey($this->api_key);
 
         $payment = new Payment;
@@ -236,6 +291,17 @@ class XenditController extends Controller
     }
 
     public function chargeIndomaret(){
+        //cek apakah ada pembayaran aktif dan user level 1
+        $active_payment = Payment::where('user_id', '=', Auth::id())
+        ->where(function($query){
+            $query->where('status','=','pending')->orWhere('status','=','challenge');
+        })
+        ->get();
+
+        if(count($active_payment) > 0 || Auth::user()->level == 1){
+            return redirect('/home');
+        }
+
         Xendit::setApiKey($this->api_key);
 
         $payment = new Payment;

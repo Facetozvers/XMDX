@@ -25,7 +25,7 @@ class XenditCallbackController extends Controller
         if($charge['data']['status'] == 'SUCCEEDED'){ 
 
             $payment = Payment::where('order_id',$charge['data']['reference_id'])->first();
-            $payment->status = $charge['data']['status'];   //SUCCEEDED
+            $payment->status = strtolower($charge['data']['status']);   //SUCCEEDED
             $payment->save();
 
 
@@ -40,7 +40,7 @@ class XenditCallbackController extends Controller
         else{       
 
             $payment = Payment::where('order_id',$charge['data']['reference_id'])->first();
-            $payment->status = $charge['data']['status'];  
+            $payment->status = strtolower($charge['data']['status']);  
             $payment->save();
 
             return response('Status Pembayaran berhasil diupdate', 200);
@@ -52,7 +52,7 @@ class XenditCallbackController extends Controller
 
         $payment = Payment::where('transaction_id', $charge['payment_code'])->first();
         
-        $payment->status = $charge['status'];   
+        $payment->status = strtolower($charge['status']);   
         $payment->save();
 
         
