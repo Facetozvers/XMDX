@@ -593,7 +593,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                    <a class="btn btn-primary" href="/midtrans/chargeDana">Bayar</a>
+                    <a class="btn btn-primary" href="/xendit/chargeDana">Bayar</a>
                 </div>
             </div>
         </div>
@@ -621,7 +621,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                    <a class="btn btn-primary" href="/midtrans/chargeShopeePay">Bayar</a>
+                    <a class="btn btn-primary" href="/xendit/chargeShopeePay">Bayar</a>
                 </div>
             </div>
         </div>
@@ -649,7 +649,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                    <a class="btn btn-primary" href="/midtrans/chargeLinkAja">Bayar</a>
+                    <a class="btn btn-primary" href="/xendit/chargeLinkAja">Bayar</a>
                 </div>
             </div>
         </div>
@@ -678,7 +678,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                    <a class="btn btn-primary" href="/midtrans/chargeAlfamart">Bayar</a>
+                    <a class="btn btn-primary" href="/xendit/chargeAlfamart">Bayar</a>
                 </div>
             </div>
         </div>
@@ -707,7 +707,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                    <a class="btn btn-primary" href="/midtrans/chargeIndomaret">Bayar</a>
+                    <a class="btn btn-primary" href="/xendit/chargeIndomaret">Bayar</a>
                 </div>
             </div>
         </div>

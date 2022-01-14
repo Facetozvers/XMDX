@@ -38,6 +38,7 @@ Route::post('/midtrans/chargeCard', 'MidtransController@chargeCard');
 
 //checkoutPage
 Route::get('/shopeePay/checkout', 'XenditController@shopeePayCheckout');
+Route::get('/gopay/checkout', 'MidtransController@gopayCheckout');
 Route::get('/retail/checkout', 'XenditController@retailCheckout');
 Route::get('/ovo/checkout', 'XenditController@ovoCheckout');
 Route::get('/payment/checkout/{id}', 'MidtransController@vaCheckout');

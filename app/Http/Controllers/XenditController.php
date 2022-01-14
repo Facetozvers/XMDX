@@ -177,9 +177,10 @@ class XenditController extends Controller
     }
 
     public function shopeePayCheckout(Request $request){
-        $qr_code = $request->links['mobile_deeplink_checkout_url'];
+        $qr_code = $request->links['qr_checkout_string'];
+        $mobile_link = $request->links['mobile_deeplink_checkout_url'];
         
-        return view('payment.shopeepay', ['qr_code' => $qr_code]);
+        return view('payment.shopeepay', ['qr_code' => $qr_code, 'mobile_link' => $mobile_link]);
     }
 
     public function chargeOVO(Request $request){

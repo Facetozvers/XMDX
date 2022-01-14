@@ -7,9 +7,9 @@
         <div class="col-9 text-center">
             <div class="card">
                 <div class="card-body">
-                        <h1 class="pb-4">BAYAR IDR 699.000 DENGAN SHOPEEPAY</h1>
+                        <h1 class="pb-4">BAYAR IDR 699.000 DENGAN GOPAY</h1>
                     
-                        <p>{!! QrCode::size(250)->generate($qr_code); !!}</p>
+                        <img src="{{$qr_code}}" alt="" style="height:300px; width:auto">
                     
                         <p>PINDAI QR CODE UNTUK MELAKUKAN PEMBAYARAN</p>
                         

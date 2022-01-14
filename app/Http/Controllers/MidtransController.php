@@ -79,6 +79,7 @@ class MidtransController extends Controller
         if(isset($chargeData->redirect_url) && $chargeData->transaction_status == 'pending'){ //berarti membutuhkan 3ds
             return view('payment.3ds', ['chargeData' => $chargeData]);
         }
+
         return redirect($chargeData->actions['1']->url);
     }
 
@@ -124,7 +125,7 @@ class MidtransController extends Controller
         $payment->status = $chargeData->transaction_status;
         $payment->save();
 
-        return redirect($chargeData->actions['1']->url);
+        return redirect('/gopay/checkout?deeplink='.$chargeData->actions['1']->url.'&qr_code='.$chargeData->actions['0']->url);
     }
 
     public function chargeBNIVA(){
@@ -372,6 +373,13 @@ class MidtransController extends Controller
             echo 'Transaksi gagal';
             return header("Refresh", "5;url=/home"); 
         }
+    }
+
+    public function gopayCheckout(Request $request){
+        $qr_code = $request->qr_code;
+        $mobile_link = $request->deeplink;
+        
+        return view('payment.gopay', ['qr_code' => $qr_code, 'mobile_link' => $mobile_link]);
     }
 
 }
