@@ -26,7 +26,7 @@ class MidtransController extends Controller
 
         \Midtrans\Config::$serverKey = $this->api_key;
         \Midtrans\Config::$isProduction = false;
-
+        
         $payment = new Payment;
         $payment->user_id = Auth::id();
         $payment->order_id = 'DX-'.Str::random(5);
@@ -46,9 +46,27 @@ class MidtransController extends Controller
                 'token_id'      => $request->card_token,
                 'authentication'=> true,
             ),
+            'item_details' => array(
+                array(
+                    'id' => 'a1',
+                    'price' => 699000,
+                    'quantity' => 1,
+                    'name' => 'Talent Premium',
+                )
+            ),
             'customer_details' => array(
-                'first_name' => Auth::user()->name,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
                 'email' => Auth::user()->email,
+                'billing_address' => array(
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => Auth::user()->email,
+                    'address' => $request->address,
+                    'city' => $request->city,
+                    'postal_code' => $request->postal_code,
+                    'country_code' => $request->country_code,
+                ),
             )
         );
          

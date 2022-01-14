@@ -26,7 +26,9 @@
         </div>
     </div>
     <div class="row justify-content-center">
+        @if(count($payments) > 0)
         <h5>Billing</h5>
+        @endif
         <div class="col-md-12">
             @foreach($payments as $bill)
             <div class="card mb-3">
